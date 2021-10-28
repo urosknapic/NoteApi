@@ -5,7 +5,7 @@ using NoteApi.Models;
 
 namespace NoteApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/notes")]
     [ApiController]
     public class NotesControllers : ControllerBase
     {
