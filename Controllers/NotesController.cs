@@ -7,20 +7,23 @@ namespace NoteApi.Controllers
 {
     [Route("api/notes")]
     [ApiController]
-    public class NotesControllers : ControllerBase
+    public class NotesController : ControllerBase
     {
-        /*
-        CRUD principle: create, read, update, delete
-            Api endpoints:
-            GET single note; read operation; 200 ok, 400, 404
-            GET all resources; read operation; 200, 400, 404
-            POST create new post; 201 on created; 401 unauthorized;
-            PUT for update
-            DELETE for delete note
-        */
-        // TODO: replace that with service
-        private readonly NoteRepository _noteRepository = new NoteRepository();
+        private readonly INoteRepository _noteRepository;
 
+        public NotesController(INoteRepository noteRepository)
+        {
+            _noteRepository = noteRepository;
+        }
+        /* TODO:
+        CRUD principle: create, read, update, delete
+        Api endpoints:
+        GET single note; read operation; 200 ok, 400, 404
+        GET all resources; read operation; 200, 400, 404
+        POST create new post; 201 on created; 401 unauthorized;
+        PUT for update
+        DELETE for delete note
+        */
         // GET api/notes
         [HttpGet]
         public ActionResult<IEnumerable<Note>> GetAllNotes()
