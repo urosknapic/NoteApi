@@ -15,7 +15,7 @@ namespace NoteApi.Data
             return noteList;
         }
 
-        public Note GetNoteById()
+        public Note GetNoteById(int id)
         {
             return new Note
             {
