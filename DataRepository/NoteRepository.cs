@@ -8,9 +8,9 @@ namespace NoteApi.Data
         public IEnumerable<NoteModel> GetAllNotes()
         {
             var noteList = new List<NoteModel>(){
-                new NoteModel { Id = 1, Name = "Test Note 1"},
-                new NoteModel { Id = 2, Name = "Test Note 2"},
-                new NoteModel { Id = 3, Name = "Test Note 3"}
+                new NoteModel { Id = 1, Title = "Test Note 1"},
+                new NoteModel { Id = 2, Title = "Test Note 2"},
+                new NoteModel { Id = 3, Title = "Test Note 3"}
             };
             return noteList;
         }
