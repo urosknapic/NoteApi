@@ -1,6 +1,6 @@
 namespace NoteApi.Models
 {
-    public class Note
+    public class NoteModel
     {
         public int Id { get; set; }
         public string Name { get; set; }

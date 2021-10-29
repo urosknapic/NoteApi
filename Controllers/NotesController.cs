@@ -26,7 +26,7 @@ namespace NoteApi.Controllers
         */
         // GET api/notes
         [HttpGet]
-        public ActionResult<IEnumerable<Note>> GetAllNotes()
+        public ActionResult<IEnumerable<NoteModel>> GetAllNotes()
         {
             var noteList = _noteRepository.GetAllNotes();
             return Ok(noteList);
@@ -34,7 +34,7 @@ namespace NoteApi.Controllers
 
         // GET api/notes/{id}
         [HttpGet("{id}")]
-        public ActionResult<Note> GetNoteById(int id)
+        public ActionResult<NoteModel> GetNoteById(int id)
         {
             var noteItem = _noteRepository.GetNoteById(id);
             return Ok(noteItem);

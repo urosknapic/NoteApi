@@ -37,7 +37,9 @@ namespace NoteApi
 
             services.AddScoped<INoteRepository, NoteRepository>();
 
-            services.AddDbContextPool<NoteDb>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
+            services.AddDbContextPool<NoteDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
+            // services.AddDbContextPool<FolderDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

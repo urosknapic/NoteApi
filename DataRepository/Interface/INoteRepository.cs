@@ -5,7 +5,7 @@ namespace NoteApi.Data
 {
     public interface INoteRepository
     {
-        IEnumerable<Note> GetAllNotes();
-        Note GetNoteById(int id);
+        IEnumerable<NoteModel> GetAllNotes();
+        NoteModel GetNoteById(int id);
     }
 }
