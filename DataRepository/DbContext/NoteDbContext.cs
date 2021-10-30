@@ -8,6 +8,7 @@ namespace NoteApi.Data
         public NoteDbContext(DbContextOptions<NoteDbContext> options) : base(options) { }
 
         public DbSet<Note> Note { get; set; }
+        public DbSet<Folder> Folder { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
