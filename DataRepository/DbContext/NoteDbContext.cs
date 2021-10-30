@@ -9,6 +9,9 @@ namespace NoteApi.Data
 
         public DbSet<Note> Note { get; set; }
         public DbSet<Folder> Folder { get; set; }
+        public DbSet<Type> Type { get; set; }
+        public DbSet<BodyNote> BodyNote { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
