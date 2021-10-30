@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace NoteApi.Data.Tables
@@ -8,5 +9,6 @@ namespace NoteApi.Data.Tables
         public int Id { get; set; }
         [MaxLength(100)]
         public string Title { get; set; }
+        public DateTime CreatedAt { get; set; }
     }
 }
