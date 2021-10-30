@@ -9,6 +9,8 @@ namespace NoteApi.Profilers
         public NoteProfiler()
         {
             CreateMap<Note, NoteReadDto>();
+
+            CreateMap<NoteCreateDto, Note>();
         }
     }
 }

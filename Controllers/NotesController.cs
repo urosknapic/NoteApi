@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -45,6 +46,18 @@ namespace NoteApi.Controllers
             }
 
             return Ok(_noteMapper.Map<NoteReadDto>(noteItem));
+        }
+
+        [HttpPost]
+        public ActionResult<NoteReadDto> CreateNote(NoteCreateDto createDto)
+        {
+            var note = _noteMapper.Map<Note>(createDto);
+            note.CreatedAt = DateTime.Now;
+
+            _noteRepository.CreateNote(note);
+            _noteRepository.SaveChanges();
+
+            return Ok(note);
         }
     }
 }

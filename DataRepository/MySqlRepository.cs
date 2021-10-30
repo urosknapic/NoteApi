@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NoteApi.Data.Tables;
@@ -13,6 +14,16 @@ namespace NoteApi.Data
             _context = noteContext;
         }
 
+        public void CreateNote(Note note)
+        {
+            if (note == null)
+            {
+                // Maybe do something else.
+                throw new ArgumentNullException(nameof(note));
+            }
+            _context.Note.Add(note);
+        }
+
         public IEnumerable<Note> GetAllNotes()
         {
             return _context.Note.ToList();
@@ -21,6 +32,11 @@ namespace NoteApi.Data
         public Note GetNoteById(int id)
         {
             return _context.Note.Where(data => data.Id == id).FirstOrDefault();
+        }
+
+        public bool SaveChanges()
+        {
+            return _context.SaveChanges() >= 0;
         }
     }
 }
