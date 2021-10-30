@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using NoteApi.Data;
-using NoteApi.Models;
+using NoteApi.Data.Tables;
 
 namespace NoteApi.Controllers
 {

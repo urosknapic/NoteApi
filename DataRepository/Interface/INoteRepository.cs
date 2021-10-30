@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using NoteApi.Models;
+using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
