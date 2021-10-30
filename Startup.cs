@@ -35,7 +35,7 @@ namespace NoteApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NoteApi", Version = "v1" });
             });
 
-            services.AddScoped<INoteRepository, NoteRepository>();
+            services.AddScoped<INoteRepository, MySqlRepository>();
 
             services.AddDbContextPool<NoteDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
             // services.AddDbContextPool<FolderDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));

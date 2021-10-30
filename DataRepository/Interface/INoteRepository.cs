@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using NoteApi.Models;
+using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
     public interface INoteRepository
     {
-        IEnumerable<NoteModel> GetAllNotes();
-        NoteModel GetNoteById(int id);
+        IEnumerable<Note> GetAllNotes();
+        Note GetNoteById(int id);
     }
 }
