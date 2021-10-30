@@ -35,11 +35,11 @@ namespace NoteApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "NoteApi", Version = "v1" });
             });
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddScoped<INoteRepository, MySqlNoteRepository>();
 
             services.AddDbContextPool<NoteDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
-            // services.AddDbContextPool<FolderDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

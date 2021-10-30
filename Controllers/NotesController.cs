@@ -15,15 +15,6 @@ namespace NoteApi.Controllers
         {
             _noteRepository = noteRepository;
         }
-        /* TODO:
-        CRUD principle: create, read, update, delete
-        Api endpoints:
-        GET single note; read operation; 200 ok, 400, 404
-        GET all resources; read operation; 200, 400, 404
-        POST create new post; 201 on created; 401 unauthorized;
-        PUT for update
-        DELETE for delete note
-        */
         // GET api/notes
         [HttpGet]
         public ActionResult<IEnumerable<Note>> GetAllNotes()
@@ -37,6 +28,12 @@ namespace NoteApi.Controllers
         public ActionResult<Note> GetNoteById(int id)
         {
             var noteItem = _noteRepository.GetNoteById(id);
+
+            if (noteItem == null)
+            {
+                return NoContent();
+            }
+
             return Ok(noteItem);
         }
     }
