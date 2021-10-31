@@ -9,5 +9,6 @@ namespace NoteApi.Data
         IEnumerable<Note> GetAllNotes();
         Note GetNoteById(int id);
         void CreateNote(Note note);
+        void UpdateNote(Note note);
     }
 }

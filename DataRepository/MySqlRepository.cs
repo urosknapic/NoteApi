@@ -18,7 +18,6 @@ namespace NoteApi.Data
         {
             if (note == null)
             {
-                // Maybe do something else.
                 throw new ArgumentNullException(nameof(note));
             }
             _context.Note.Add(note);
@@ -37,6 +36,11 @@ namespace NoteApi.Data
         public bool SaveChanges()
         {
             return _context.SaveChanges() >= 0;
+        }
+
+        public void UpdateNote(Note note)
+        {
+            throw new NotImplementedException();
         }
     }
 }

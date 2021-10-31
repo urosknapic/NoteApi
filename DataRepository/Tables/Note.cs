@@ -8,6 +8,7 @@ namespace NoteApi.Data.Tables
         [Key]
         public int Id { get; set; }
         [MaxLength(100)]
+        [Required]
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
     }
