@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NoteApi.Data;
 using NoteApi.Data.Tables;
 using NoteApi.Dtos;
+using Microsoft.AspNetCore.JsonPatch;
 
 namespace NoteApi.Controllers
 {
@@ -75,7 +76,49 @@ namespace NoteApi.Controllers
             _noteMapper.Map(updateDto, noteFromRepository);
 
             _noteRepository.UpdateNote(noteFromRepository);
-            _noteRepository.SaveChanges();           
+            _noteRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public ActionResult PartialNoteUpdate(int id, JsonPatchDocument<NoteUpdateDto> patchNote)
+        {
+            var noteFromRepository = _noteRepository.GetNoteById(id);
+
+            if (noteFromRepository == null)
+            {
+                return NotFound();
+            }
+
+            var noteUpdaPatch = _noteMapper.Map<NoteUpdateDto>(noteFromRepository);
+            patchNote.ApplyTo(noteUpdaPatch, ModelState);
+
+            if (!TryValidateModel(noteUpdaPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _noteMapper.Map(noteUpdaPatch, noteFromRepository);
+
+            _noteRepository.UpdateNote(noteFromRepository);
+            _noteRepository.SaveChanges();
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult DeleteNote(int id)
+        {
+            var noteFromRepository = _noteRepository.GetNoteById(id);
+
+            if (noteFromRepository == null)
+            {
+                return NotFound();
+            }
+
+            _noteRepository.DeleteNote(noteFromRepository);
+            _noteRepository.SaveChanges();
 
             return NoContent();
         }

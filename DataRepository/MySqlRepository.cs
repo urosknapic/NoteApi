@@ -40,7 +40,16 @@ namespace NoteApi.Data
 
         public void UpdateNote(Note note)
         {
+            _context.Note.Update(note);
+        }
+        public void DeleteNote(Note note)
+        {
+            if (note == null)
+            {
+                throw new ArgumentNullException(nameof(note));
+            }
 
+            _context.Note.Remove(note);
         }
     }
 }
