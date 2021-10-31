@@ -16,10 +16,7 @@ namespace NoteApi.Data
 
         public void CreateNote(Note note)
         {
-            if (note == null)
-            {
-                throw new ArgumentNullException(nameof(note));
-            }
+            IfNullThrowArgumentException(note);
             _context.Note.Add(note);
         }
 
@@ -44,12 +41,16 @@ namespace NoteApi.Data
         }
         public void DeleteNote(Note note)
         {
+            IfNullThrowArgumentException(note);
+            _context.Note.Remove(note);
+        }
+
+        private void IfNullThrowArgumentException(Note note)
+        {
             if (note == null)
             {
                 throw new ArgumentNullException(nameof(note));
             }
-
-            _context.Note.Remove(note);
         }
     }
 }

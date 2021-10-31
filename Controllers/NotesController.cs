@@ -66,16 +66,16 @@ namespace NoteApi.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateNote(int id, NoteUpdateDto updateDto)
         {
-            var noteFromRepository = _noteRepository.GetNoteById(id);
+            var noteItem = _noteRepository.GetNoteById(id);
 
-            if (noteFromRepository == null)
+            if (noteItem == null)
             {
                 return NotFound();
             }
 
-            _noteMapper.Map(updateDto, noteFromRepository);
+            _noteMapper.Map(updateDto, noteItem);
 
-            _noteRepository.UpdateNote(noteFromRepository);
+            _noteRepository.UpdateNote(noteItem);
             _noteRepository.SaveChanges();
 
             return NoContent();
@@ -84,14 +84,14 @@ namespace NoteApi.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialNoteUpdate(int id, JsonPatchDocument<NoteUpdateDto> patchNote)
         {
-            var noteFromRepository = _noteRepository.GetNoteById(id);
+            var noteItem = _noteRepository.GetNoteById(id);
 
-            if (noteFromRepository == null)
+            if (noteItem == null)
             {
                 return NotFound();
             }
 
-            var noteUpdaPatch = _noteMapper.Map<NoteUpdateDto>(noteFromRepository);
+            var noteUpdaPatch = _noteMapper.Map<NoteUpdateDto>(noteItem);
             patchNote.ApplyTo(noteUpdaPatch, ModelState);
 
             if (!TryValidateModel(noteUpdaPatch))
@@ -99,9 +99,9 @@ namespace NoteApi.Controllers
                 return ValidationProblem(ModelState);
             }
 
-            _noteMapper.Map(noteUpdaPatch, noteFromRepository);
+            _noteMapper.Map(noteUpdaPatch, noteItem);
 
-            _noteRepository.UpdateNote(noteFromRepository);
+            _noteRepository.UpdateNote(noteItem);
             _noteRepository.SaveChanges();
 
             return NoContent();
