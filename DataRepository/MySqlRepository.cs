@@ -40,7 +40,7 @@ namespace NoteApi.Data
 
         public void UpdateNote(Note note)
         {
-            throw new NotImplementedException();
+
         }
     }
 }

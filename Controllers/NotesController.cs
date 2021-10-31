@@ -35,7 +35,7 @@ namespace NoteApi.Controllers
         }
 
         // GET api/notes/{id}
-        [HttpGet("{id}", Name="GetNoteById")]
+        [HttpGet("{id}", Name = "GetNoteById")]
         public ActionResult<NoteReadDto> GetNoteById(int id)
         {
             var noteItem = _noteRepository.GetNoteById(id);
@@ -60,6 +60,24 @@ namespace NoteApi.Controllers
             var noteDto = _noteMapper.Map<NoteReadDto>(note);
 
             return CreatedAtRoute("GetNoteById", new { Id = noteDto.Id }, noteDto);
+        }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateNote(int id, NoteUpdateDto updateDto)
+        {
+            var noteFromRepository = _noteRepository.GetNoteById(id);
+
+            if (noteFromRepository == null)
+            {
+                return NotFound();
+            }
+
+            _noteMapper.Map(updateDto, noteFromRepository);
+
+            _noteRepository.UpdateNote(noteFromRepository);
+            _noteRepository.SaveChanges();           
+
+            return NoContent();
         }
     }
 }
