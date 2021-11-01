@@ -3,9 +3,8 @@ using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
-    public interface INoteRepository
+    public interface INoteRepository : IBaseRepository
     {
-        bool SaveChanges();
         IEnumerable<Note> GetAllNotes();
         Note GetNoteById(int id);
         void CreateNote(Note note);
