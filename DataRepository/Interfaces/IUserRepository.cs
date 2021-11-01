@@ -1,10 +1,12 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
     public interface IUserRepository : IBaseRepository
     {
-        User GetUserById(int id);
-        User Authenticate(string username, string password);
+        Task<User> Authenticate(string username, string password);
+        Task<IEnumerable<User>> GetAllUsers();
     }
 }

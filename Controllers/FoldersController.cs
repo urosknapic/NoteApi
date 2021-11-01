@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using NoteApi.Data;
@@ -9,6 +10,7 @@ using NoteApi.Dtos;
 
 namespace NoteApi.Controllers
 {
+    [Authorize]
     [Route("api/folders")]
     [ApiController]
     public class FoldersController : ControllerBase

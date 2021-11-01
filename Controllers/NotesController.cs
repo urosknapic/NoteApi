@@ -6,9 +6,11 @@ using NoteApi.Data;
 using NoteApi.Data.Tables;
 using NoteApi.Dtos;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.AspNetCore.Authorization;
 
 namespace NoteApi.Controllers
 {
+    [Authorize]
     [Route("api/notes")]
     [ApiController]
     public class NotesController : ControllerBase

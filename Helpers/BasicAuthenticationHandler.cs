@@ -29,6 +29,7 @@ namespace NoteApi.Helpers
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
+            // skip authentication if endpoint has [AllowAnonymous] attribute
             var endpoint = Context.GetEndpoint();
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
             {
@@ -48,7 +49,7 @@ namespace NoteApi.Helpers
                 var credentials = Encoding.UTF8.GetString(credentialBytes).Split(new[] { ':' }, 2);
                 var username = credentials[0];
                 var password = credentials[1];
-                user = _repository.Authenticate(username, password);
+                user = await _repository.Authenticate(username, password);
             }
             catch
             {

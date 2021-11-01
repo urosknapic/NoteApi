@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
@@ -11,20 +13,21 @@ namespace NoteApi.Data
         {
             _context = noteContext;
         }
-        
-        public User Authenticate(string username, string password)
+
+        public async Task<User> Authenticate(string username, string password)
         {
-            return _context.User.Where(user => user.UserName == username && user.Password == password).FirstOrDefault();
+            var user = await Task.Run(() => _context.User.SingleOrDefault(x => x.UserName == username && x.Password == password));
+            return user;
         }
 
-        public User GetUserById(int id)
+        public async Task<IEnumerable<User>> GetAllUsers()
         {
-            return _context.User.Where(user => user.Id == id).FirstOrDefault();
+            return await Task.Run(() => _context.User.ToList());
         }
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return false;
         }
     }
 }
