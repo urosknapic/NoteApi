@@ -7,9 +7,13 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
+        public string Name { get; set; }
         [MaxLength(100)]
         [Required]
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
+
+        public int IdFolder { get; set; } // FK folder
+        public int IdType { get; set; } // FK type
     }
 }

@@ -6,5 +6,7 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
+        public string Content { get; set; }
+        public int IdNote { get; set; } // FK note
     }
 }
