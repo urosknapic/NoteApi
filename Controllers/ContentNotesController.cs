@@ -11,12 +11,12 @@ namespace NoteApi.Controllers
 {
     [Route("api/contentNotes")]
     [ApiController]
-    public class BodyNotesController : ControllerBase
+    public class ContentNotesController : ControllerBase
     {
         private readonly IContentNoteRepository _repository;
         private readonly IMapper _mapper;
 
-        public BodyNotesController(IContentNoteRepository repository, IMapper mapper)
+        public ContentNotesController(IContentNoteRepository repository, IMapper mapper)
         {
             _repository = repository;
             _mapper = mapper;
