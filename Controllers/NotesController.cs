@@ -24,7 +24,6 @@ namespace NoteApi.Controllers
             _noteMapper = noteMapper;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes()
         {

@@ -24,7 +24,6 @@ namespace NoteApi.Controllers
             _mapper = noteMapper;
         }
 
-        [AllowAnonymous]
         [HttpGet]
         public ActionResult GetAllFolders()
         {
