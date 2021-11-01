@@ -52,7 +52,6 @@ namespace NoteApi.Controllers
         public ActionResult<FolderReadDto> CreateFolder(FolderCreateDto createDto)
         {
             Folder folderItem = _mapper.Map<Folder>(createDto);
-            folderItem.CreatedAt = DateTime.Now;
 
             _repository.CreateFolder(folderItem);
             _repository.SaveChanges();

@@ -9,10 +9,10 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
-        
+
         [MaxLength(100)]
         public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
+        
         [ForeignKey("UserId")]
         public int UserId { get; set; }
         public IEnumerable<Note> Notes { get; set; }
