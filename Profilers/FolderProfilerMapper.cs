@@ -10,8 +10,8 @@ namespace NoteApi.Profilers
         {
             CreateMap<Folder, FolderReadDto>();
             CreateMap<FolderCreateDto, Folder>();
+            CreateMap<FolderUpdateDto, Folder>();
             /* 
-            CreateMap<NoteUpdateDto, Note>();
             CreateMap<Note, NoteUpdateDto>();
              */
         }
