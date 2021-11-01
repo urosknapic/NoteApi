@@ -7,8 +7,8 @@ namespace NoteApi.Data
     {
         IEnumerable<ContentNote> GetAllContentNotes();
         ContentNote GetContentNoteById(int id);
-        void CreateContentNote(ContentNote folder);
-        void UpdateContentNote(ContentNote folder);
-        void DeleteContentNote(ContentNote folder);
+        void CreateContentNote(ContentNote contentNote);
+        void UpdateContentNote(ContentNote contentNote);
+        void DeleteContentNote(ContentNote contentNote);
     }
 }

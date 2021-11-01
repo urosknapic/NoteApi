@@ -10,7 +10,7 @@ namespace NoteApi.Data
         public DbSet<Note> Note { get; set; }
         public DbSet<Folder> Folder { get; set; }
         public DbSet<Type> Type { get; set; }
-        public DbSet<ContentNote> ContentBody { get; set; }
+        public DbSet<ContentNote> ContentNote { get; set; }
         public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -18,5 +18,7 @@ namespace NoteApi.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Note>(e => e.Property(o => o.Title).HasColumnType("varchar(100)"));
         }
+
+        
     }
 }
