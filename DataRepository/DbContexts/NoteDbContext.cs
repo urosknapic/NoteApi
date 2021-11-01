@@ -16,9 +16,6 @@ namespace NoteApi.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Note>(e => e.Property(o => o.Title).HasColumnType("varchar(100)"));
         }
-
-        
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NoteApi.Data.Tables
 {
@@ -8,10 +9,12 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
+        
+        [MaxLength(100)]
         public string Name { get; set; }
         public DateTime CreatedAt { get; set; }
-        public int UserId { get; set; } // FK user
-
+        [ForeignKey("UserId")]
+        public int UserId { get; set; }
         public IEnumerable<Note> Notes { get; set; }
     }
 }

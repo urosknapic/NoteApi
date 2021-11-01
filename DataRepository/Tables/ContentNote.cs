@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace NoteApi.Data.Tables
 {
@@ -6,7 +7,11 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
+
+        [MaxLength(1000)]
         public string Content { get; set; }
-        public int IdNote { get; set; } // FK note
+
+        [ForeignKey("NoteId")]
+        public int NoteId { get; set; }
     }
 }

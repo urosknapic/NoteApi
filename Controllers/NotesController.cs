@@ -53,7 +53,6 @@ namespace NoteApi.Controllers
         public ActionResult<NoteReadDto> CreateNote(NoteCreateDto createDto)
         {
             Note noteItem = _noteMapper.Map<Note>(createDto);
-            noteItem.CreatedAt = DateTime.Now;
 
             _noteRepository.CreateNote(noteItem);
             _noteRepository.SaveChanges();

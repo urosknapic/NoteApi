@@ -6,6 +6,7 @@ namespace NoteApi.Data.Tables
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public string Name { get; set; }
     }
 }
