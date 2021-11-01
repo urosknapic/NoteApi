@@ -80,7 +80,7 @@ namespace NoteApi.Controllers
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public ActionResult PartialNoteUpdate(int id, JsonPatchDocument<FolderUpdateDto> patchNote)
+        public ActionResult PartialFolderUpdate(int id, JsonPatchDocument<FolderUpdateDto> patchNote)
         {
             Folder folderItem = _repository.GetFolderById(id);
 
@@ -106,7 +106,7 @@ namespace NoteApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteNote(int id)
+        public ActionResult DeleteFolder(int id)
         {
             Folder folderItem = _repository.GetFolderById(id);
 
