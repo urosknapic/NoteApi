@@ -4,9 +4,9 @@ using NoteApi.Dtos;
 
 namespace NoteApi.Profilers
 {
-    public class NoteProfiler : Profile
+    public class NoteProfilerMapper : Profile
     {
-        public NoteProfiler()
+        public NoteProfilerMapper()
         {
             CreateMap<Note, NoteReadDto>();
             CreateMap<NoteCreateDto, Note>();

@@ -5,11 +5,11 @@ using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
-    public class MySqlNoteRepository : INoteRepository
+    public class MYSQLNoteRepository : INoteRepository
     {
         private NoteDbContext _context;
 
-        public MySqlNoteRepository(NoteDbContext noteContext)
+        public MYSQLNoteRepository(NoteDbContext noteContext)
         {
             _context = noteContext;
         }
