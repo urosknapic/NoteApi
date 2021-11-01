@@ -23,7 +23,8 @@ namespace NoteApi.Controllers
             _noteRepository = noteRepository;
             _noteMapper = noteMapper;
         }
-        // GET api/notes
+
+        [AllowAnonymous]
         [HttpGet]
         public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes()
         {
