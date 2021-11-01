@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NoteApi.Data;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
+using NoteApi.Helpers;
 
 namespace NoteApi
 {
@@ -33,6 +35,10 @@ namespace NoteApi
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
+
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

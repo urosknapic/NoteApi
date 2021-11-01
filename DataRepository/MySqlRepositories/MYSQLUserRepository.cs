@@ -11,6 +11,11 @@ namespace NoteApi.Data
         {
             _context = noteContext;
         }
+        
+        public User Authenticate(string username, string password)
+        {
+            return _context.User.Where(user => user.UserName == username && user.Password == password).FirstOrDefault();
+        }
 
         public User GetUserById(int id)
         {
