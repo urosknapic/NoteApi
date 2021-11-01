@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace NoteApi.Data.Tables
@@ -12,8 +13,8 @@ namespace NoteApi.Data.Tables
         [Required]
         public string Title { get; set; }
         public DateTime CreatedAt { get; set; }
-
         public int IdFolder { get; set; } // FK folder
         public int IdType { get; set; } // FK type
+        public IEnumerable<ContentNote> Content { get; set; }
     }
 }
