@@ -4,15 +4,15 @@ using NoteApi.Dtos;
 
 namespace NoteApi.Profilers
 {
-    public class NoteProfiler : Profile
+    public class FolderProfilerMapper : Profile
     {
-        public NoteProfiler()
+        public FolderProfilerMapper()
         {
-            CreateMap<Note, NoteReadDto>();
-            CreateMap<NoteCreateDto, Note>();
+            CreateMap<Folder, FolderReadDto>();
+            /* CreateMap<NoteCreateDto, Note>();
             CreateMap<NoteUpdateDto, Note>();
             CreateMap<Note, NoteUpdateDto>();
-            
+             */
         }
     }
 }
