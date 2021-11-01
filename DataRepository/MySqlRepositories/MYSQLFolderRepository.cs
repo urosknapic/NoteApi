@@ -1,38 +1,55 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using NoteApi.Data.Tables;
 
 namespace NoteApi.Data
 {
     public class MYSQLFolderRepository : IFolderRepository
     {
-        public void CreteFolder(Folder note)
+        private NoteDbContext _context;
+
+        public MYSQLFolderRepository(NoteDbContext noteContext)
         {
-            throw new System.NotImplementedException();
+            _context = noteContext;
+        }
+        public void CreteFolder(Folder folder)
+        {
+            IfNullThrowArgumentException(folder);
+            _context.Folder.Add(folder);
         }
 
-        public void DeleteFolder(Folder note)
+        public void DeleteFolder(Folder folder)
         {
-            throw new System.NotImplementedException();
+            IfNullThrowArgumentException(folder);
+            _context.Folder.Remove(folder);
         }
 
         public IEnumerable<Folder> GetAllFolders()
         {
-            throw new System.NotImplementedException();
+            return _context.Folder.ToList();
         }
 
         public Folder GetFolderById(int id)
         {
-            throw new System.NotImplementedException();
+            return _context.Folder.Where(data => data.Id == id).FirstOrDefault();
         }
 
         public bool SaveChanges()
         {
-            throw new System.NotImplementedException();
+            return _context.SaveChanges() >= 0;
         }
 
-        public void UpdateFolder(Folder note)
+        public void UpdateFolder(Folder folder)
         {
-            throw new System.NotImplementedException();
+            _context.Folder.Update(folder);
+        }
+        private void IfNullThrowArgumentException(Folder folder)
+        {
+            if (folder == null)
+            {
+                throw new ArgumentNullException(nameof(folder));
+            }
         }
     }
 }
