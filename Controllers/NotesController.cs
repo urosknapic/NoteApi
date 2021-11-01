@@ -39,7 +39,7 @@ namespace NoteApi.Controllers
         [HttpGet("{id}", Name = "GetNoteById")]
         public ActionResult<NoteReadDto> GetNoteById(int id)
         {
-            var noteItem = _noteRepository.GetNoteById(id);
+            Note noteItem = _noteRepository.GetNoteById(id);
 
             if (noteItem == null)
             {
@@ -52,13 +52,13 @@ namespace NoteApi.Controllers
         [HttpPost]
         public ActionResult<NoteReadDto> CreateNote(NoteCreateDto createDto)
         {
-            var note = _noteMapper.Map<Note>(createDto);
-            note.CreatedAt = DateTime.Now;
+            Note noteItem = _noteMapper.Map<Note>(createDto);
+            noteItem.CreatedAt = DateTime.Now;
 
-            _noteRepository.CreateNote(note);
+            _noteRepository.CreateNote(noteItem);
             _noteRepository.SaveChanges();
 
-            var noteDto = _noteMapper.Map<NoteReadDto>(note);
+            var noteDto = _noteMapper.Map<NoteReadDto>(noteItem);
 
             return CreatedAtRoute("GetNoteById", new { Id = noteDto.Id }, noteDto);
         }
@@ -66,7 +66,7 @@ namespace NoteApi.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateNote(int id, NoteUpdateDto updateDto)
         {
-            var noteItem = _noteRepository.GetNoteById(id);
+            Note noteItem = _noteRepository.GetNoteById(id);
 
             if (noteItem == null)
             {
@@ -84,7 +84,7 @@ namespace NoteApi.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialNoteUpdate(int id, JsonPatchDocument<NoteUpdateDto> patchNote)
         {
-            var noteItem = _noteRepository.GetNoteById(id);
+            Note noteItem = _noteRepository.GetNoteById(id);
 
             if (noteItem == null)
             {
@@ -110,14 +110,14 @@ namespace NoteApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteNote(int id)
         {
-            var noteFromRepository = _noteRepository.GetNoteById(id);
+            Note noteItem = _noteRepository.GetNoteById(id);
 
-            if (noteFromRepository == null)
+            if (noteItem == null)
             {
                 return NotFound();
             }
 
-            _noteRepository.DeleteNote(noteFromRepository);
+            _noteRepository.DeleteNote(noteItem);
             _noteRepository.SaveChanges();
 
             return NoContent();
