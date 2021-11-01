@@ -13,7 +13,7 @@ namespace NoteApi.Data
         {
             _context = noteContext;
         }
-        public void CreteFolder(Folder folder)
+        public void CreateFolder(Folder folder)
         {
             IfNullThrowArgumentException(folder);
             _context.Folder.Add(folder);

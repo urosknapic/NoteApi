@@ -7,7 +7,7 @@ namespace NoteApi.Data
     {
         IEnumerable<Folder> GetAllFolders();
         Folder GetFolderById(int id);
-        void CreteFolder(Folder folder);
+        void CreateFolder(Folder folder);
         void UpdateFolder(Folder folder);
         void DeleteFolder(Folder folder);
     }
