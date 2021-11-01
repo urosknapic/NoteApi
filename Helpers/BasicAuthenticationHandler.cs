@@ -72,5 +72,4 @@ namespace NoteApi.Helpers
             return AuthenticateResult.Success(ticket);
         }
     }
-
 }

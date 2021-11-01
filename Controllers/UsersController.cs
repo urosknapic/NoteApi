@@ -10,7 +10,7 @@ namespace NoteApi.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/users")]
     public class UsersController : ControllerBase
     {
         private readonly IUserRepository _repository;
@@ -24,7 +24,7 @@ namespace NoteApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public async Task<IActionResult> Authenticate([FromBody]UserAuthenticateDto model)
+        public async Task<IActionResult> Authenticate([FromBody] UserAuthenticateDto model)
         {
             User userItem = await _repository.Authenticate(model.Username, model.Password);
 
