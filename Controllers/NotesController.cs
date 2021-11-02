@@ -87,7 +87,7 @@ namespace NoteApi.Controllers
                 return Unauthorized(_wrongUserOrPassword);
             }
 
-            var folderItem = _folderRepository.GetFolderById(createDto.FolderId);
+            var folderItem = _folderRepository.GetUserFolderById(InnerUser.Id, createDto.FolderId);
             if (folderItem == null)
             {
                 return BadRequest(_folderDoesNotExist);
@@ -117,7 +117,7 @@ namespace NoteApi.Controllers
                 return Unauthorized(_wrongUserOrPassword);
             }
 
-            var folderItem = _folderRepository.GetFolderById(updateDto.FolderId);
+            var folderItem = _folderRepository.GetUserFolderById(InnerUser.Id, updateDto.FolderId);
             if (folderItem == null)
             {
                 return BadRequest(_folderDoesNotExist);

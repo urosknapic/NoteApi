@@ -33,16 +33,6 @@ namespace NoteApi.Data
             return folderList;
         }
 
-        public Folder GetFolderById(int id)
-        {
-            Folder folder = _context.Folder.Where(folder => folder.Id == id).FirstOrDefault();
-            if(folder != null)
-            {
-                folder.Notes = _context.Note.Where(note => note.FolderId == folder.Id).ToList();
-            }
-            return folder;
-        }
-
         public Folder GetUserFolderById(int userId, int id)
         {
             Folder folder = _context.Folder.Where(folder => folder.Id == id && folder.UserId == userId).FirstOrDefault();
