@@ -11,7 +11,7 @@ using NoteApi.Dtos;
 namespace NoteApi.Controllers
 {
     [Authorize]
-    [Route("api/folders")]
+    [Route("api/users/folders")]
     [ApiController]
     public class FoldersController : MainController
     {
@@ -27,7 +27,7 @@ namespace NoteApi.Controllers
         [HttpGet]
         public ActionResult GetAllFolders()
         {
-            var foldersList = _repository.GetAllFolders();
+            var foldersList = _repository.GetAllFoldersByUserId(InnerUser.Id);
 
             if (foldersList == null)
             {
@@ -40,7 +40,7 @@ namespace NoteApi.Controllers
         [HttpGet("{id}", Name = "GetFolderById")]
         public ActionResult GetFolderById(int id)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
@@ -55,6 +55,7 @@ namespace NoteApi.Controllers
         public ActionResult<FolderReadDto> CreateFolder(FolderCreateDto createDto)
         {
             Folder folderItem = _mapper.Map<Folder>(createDto);
+            folderItem.UserId = InnerUser.Id;
 
             _repository.CreateFolder(folderItem);
             _repository.SaveChanges();

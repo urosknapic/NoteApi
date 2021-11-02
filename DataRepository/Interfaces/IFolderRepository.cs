@@ -5,7 +5,7 @@ namespace NoteApi.Data
 {
     public interface IFolderRepository : IBaseRepository
     {
-        IEnumerable<Folder> GetAllFolders();
+        IEnumerable<Folder> GetAllFoldersByUserId(int userId);
         Folder GetFolderById(int id);
         Folder GetUserFolderById(int userId, int id);
         void CreateFolder(Folder folder);
