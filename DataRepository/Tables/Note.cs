@@ -14,8 +14,8 @@ namespace NoteApi.Data.Tables
         [MaxLength(100)]
         public string Name { get; set; }
 
-        [MaxLength(100)]
         [Required]
+        [MaxLength(100)]
         public string Title { get; set; }
 
         [ForeignKey("FolderId")]

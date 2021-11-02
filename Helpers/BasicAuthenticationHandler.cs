@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NoteApi.Controllers;
 using NoteApi.Data;
 using NoteApi.Data.Tables;
 
@@ -61,6 +62,7 @@ namespace NoteApi.Helpers
                 return AuthenticateResult.Fail("Invalid Username or Password");
             }
 
+            MainController.InnerUser = user;
             var claims = new[] {
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.UserName),
