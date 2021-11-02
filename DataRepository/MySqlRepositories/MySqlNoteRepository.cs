@@ -21,9 +21,8 @@ namespace NoteApi.Data
             _context.Note.Add(note);
         }
 
-        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, int notesPerPage, int page, SortTypeEnum sort, SortDirectionEnum direction)
+        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, string searchString, int notesPerPage, int page, SortTypeEnum sort, SortDirectionEnum direction)
         {
-            var skipNotes = (page - 1) * notesPerPage;
             IEnumerable<Note> noteListTmp = null;
 
             if (userId == 0)
@@ -35,16 +34,21 @@ namespace NoteApi.Data
                 noteListTmp = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
             }
 
-            // pagination
             noteListTmp.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                noteListTmp = SearchBySearchText(noteListTmp, searchString);
+            }
 
             noteListTmp = SortNotesCollection(noteListTmp, sort, direction);
 
-            var noteList = noteListTmp
-                .Skip(skipNotes)
-                .Take(notesPerPage);
+            if (page >= 1)
+            {
+                noteListTmp = PaginationCollection(noteListTmp, page, notesPerPage);
+            }
 
-            return noteList;
+            return noteListTmp;
         }
 
         public Note GetUserNoteById(int userId, int id)
@@ -113,6 +117,21 @@ namespace NoteApi.Data
             }
 
             return collection;
+        }
+
+        private IEnumerable<Note> SearchBySearchText(IEnumerable<Note> collection, string searchString)
+        {
+            collection = collection.Where(note => note.Content.Where(content => content.Content.Contains(searchString)).Any());
+
+            return collection;
+        }
+
+        private IEnumerable<Note> PaginationCollection(IEnumerable<Note> collection, int page, int notesPerPage)
+        {
+            var skipNotes = (page - 1) * notesPerPage;
+            return collection
+                .Skip(skipNotes)
+                .Take(notesPerPage);
         }
     }
 }
