@@ -25,9 +25,10 @@ namespace NoteApi.Data
             _context.ContentNote.Remove(contentNote);
         }
 
-        public IEnumerable<ContentNote> GetAllContentNotes()
-        {
-            return _context.ContentNote.ToList();
+        public IEnumerable<ContentNote> GetAllContentNotes(int noteId)
+        {   
+
+            return _context.ContentNote.Where(content => content.NoteId == noteId).ToList();
         }
 
         public ContentNote GetContentNoteById(int id)

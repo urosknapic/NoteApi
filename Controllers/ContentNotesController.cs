@@ -11,24 +11,31 @@ using Microsoft.AspNetCore.Authorization;
 namespace NoteApi.Controllers
 {
     [Authorize]
-    [Route("api/contentNotes")]
+    [Route("api/users/notes/{noteId}/content")]
     [ApiController]
     public class ContentNotesController : MainController
     {
         private readonly IContentNoteRepository _repository;
+        private readonly INoteRepository _noteRepository;
         private readonly IMapper _mapper;
 
-        public ContentNotesController(IContentNoteRepository repository, IMapper mapper)
+        public ContentNotesController(IContentNoteRepository repository, INoteRepository noteRepository, IMapper mapper)
         {
             _repository = repository;
+            _noteRepository = noteRepository;
             _mapper = mapper;
         }
         // GET api/notes
         [HttpGet]
-        public ActionResult<IEnumerable<ContentNoteReadDto>> GetAllContentNotes()
+        public ActionResult<IEnumerable<ContentNoteReadDto>> GetAllContentNotes(int noteId)
         {
-            var contentList = _repository.GetAllContentNotes();
+            var noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, noteId);
+            if (noteItem == null)
+            {
+                return NotFound();
+            }
 
+            var contentList = _repository.GetAllContentNotes(noteItem.Id);
             if (contentList == null)
             {
                 return NoContent();
