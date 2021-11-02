@@ -5,7 +5,7 @@ namespace NoteApi.Data
 {
     public interface INoteRepository : IBaseRepository
     {
-        IEnumerable<Note> GetAllPublicOrUserNotes(int userId);
+        IEnumerable<Note> GetAllPublicOrUserNotes(int userId, int notesPerPage, int page);
         Note GetUserNoteById(int userId, int id);
         Note GetPublicOrUserNoteById(int userId, int id);
         void CreateNote(Note note);

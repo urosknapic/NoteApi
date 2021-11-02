@@ -20,19 +20,25 @@ namespace NoteApi.Data
             _context.Note.Add(note);
         }
 
-        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId)
+        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, int notesPerPage, int page)
         {
-            // if public user then return all public notes
+            var skipNotes = (page - 1) * notesPerPage;
+            IEnumerable<Note> noteListTmp = null;
+
             if (userId == 0)
             {
-                var noteListPublic = _context.Note.ToList().Where(note => note.TypeId == 2);
-                noteListPublic.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
-
-                return noteListPublic;
+                noteListTmp = _context.Note.ToList().Where(note => note.TypeId == 2); // select only public notes
+            }
+            else
+            {
+                noteListTmp = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
             }
 
-            var noteList = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
-            noteList.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+            // pagination
+            noteListTmp.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+            var noteList = noteListTmp
+                .Skip(skipNotes)
+                .Take(notesPerPage);
 
             return noteList;
         }

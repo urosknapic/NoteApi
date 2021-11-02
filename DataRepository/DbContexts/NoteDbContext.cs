@@ -145,6 +145,36 @@ namespace NoteApi.Data
                 UserId = 2,
                 IsListNote = true
             });
+            modelBuilder.Entity<Note>().HasData(new Note()
+            {
+                Id = 6,
+                Name = "Note 1",
+                Title = "Profesional painter",
+                FolderId = 4,
+                TypeId = 2,
+                UserId = 2,
+                IsListNote = false
+            });
+            modelBuilder.Entity<Note>().HasData(new Note()
+            {
+                Id = 7,
+                Name = "Note 2",
+                Title = "Profesional painter",
+                FolderId = 4,
+                TypeId = 2,
+                UserId = 2,
+                IsListNote = false
+            });
+            modelBuilder.Entity<Note>().HasData(new Note()
+            {
+                Id = 8,
+                Name = "Note 3",
+                Title = "Profesional painter",
+                FolderId = 4,
+                TypeId = 2,
+                UserId = 2,
+                IsListNote = false
+            });
         }
     }
 }

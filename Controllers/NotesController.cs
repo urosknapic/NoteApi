@@ -8,6 +8,7 @@ using NoteApi.Dtos;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Authorization;
 using System.Linq;
+using NoteApi.Enums;
 
 namespace NoteApi.Controllers
 {
@@ -46,14 +47,14 @@ namespace NoteApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes()
+        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int page = 1, int limit = 10)
         {
             if (InnerUser == null)
             {
                 return Unauthorized(_wrongUserOrPassword);
             }
 
-            var noteList = _noteRepository.GetAllPublicOrUserNotes(InnerUser.Id);
+            var noteList = _noteRepository.GetAllPublicOrUserNotes(InnerUser.Id, limit, page);
 
             if (noteList == null)
             {
@@ -61,7 +62,10 @@ namespace NoteApi.Controllers
             }
 
             var noteModel = _noteMapper.Map<IEnumerable<NoteReadDto>>(noteList);
-            return Ok(noteModel);
+            return Ok(new {
+                count = noteModel.Count(),
+                data = noteModel
+            });
         }
 
         [AllowAnonymous]
