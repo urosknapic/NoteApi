@@ -21,6 +21,26 @@ namespace NoteApi.Data
             SeedUsersFolders(modelBuilder);
             SeedTypeData(modelBuilder);
             SeedNoteData(modelBuilder);
+            SeedContentNoteData(modelBuilder);
+        }
+
+        private void SeedContentNoteData(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ContentNote>().HasData(new ContentNote(){
+                Id = 1,
+                NoteId = 5,
+                Content = "Fix lights"
+            });
+            modelBuilder.Entity<ContentNote>().HasData(new ContentNote(){
+                Id = 2,
+                NoteId = 5,
+                Content = "Paint walls"
+            });
+            modelBuilder.Entity<ContentNote>().HasData(new ContentNote(){
+                Id = 3,
+                NoteId = 7,
+                Content = "This is so sicret that I had to write it down"
+            });
         }
 
         private void SeedUserData(ModelBuilder modelBuilder)
@@ -149,7 +169,7 @@ namespace NoteApi.Data
             {
                 Id = 6,
                 Name = "Note 1",
-                Title = "Profesional painter",
+                Title = "Some special note",
                 FolderId = 4,
                 TypeId = 2,
                 UserId = 2,
@@ -159,7 +179,7 @@ namespace NoteApi.Data
             {
                 Id = 7,
                 Name = "Note 2",
-                Title = "Profesional painter",
+                Title = "And a sicret note to someone",
                 FolderId = 4,
                 TypeId = 2,
                 UserId = 2,
@@ -169,7 +189,7 @@ namespace NoteApi.Data
             {
                 Id = 8,
                 Name = "Note 3",
-                Title = "Profesional painter",
+                Title = "Motorbike parts",
                 FolderId = 4,
                 TypeId = 2,
                 UserId = 2,
