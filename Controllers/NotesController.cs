@@ -56,8 +56,7 @@ namespace NoteApi.Controllers
             {
                 return NoContent();
             }
-
-            return Ok(noteList);
+            return Ok(_noteMapper.Map<IEnumerable<NoteReadDto>>(noteList));
         }
 
         [AllowAnonymous]

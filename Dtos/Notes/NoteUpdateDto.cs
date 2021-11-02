@@ -12,5 +12,6 @@ namespace NoteApi.Dtos
         public int FolderId { get; set; }
         [Required]
         public int TypeId { get; set; }
+        public bool IsListNote { get; set; }
     }
 }
