@@ -40,7 +40,10 @@ namespace NoteApi.Data
         public Note GetUserNoteById(int userId, int id)
         {
             var noteItem = _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();
-            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
+            if (noteItem != null)
+            {
+                noteItem.Content = _context.ContentNote.Where(contextNote => contextNote.NoteId == noteItem.Id).ToList();
+            }
 
             return noteItem;
         }
@@ -48,7 +51,10 @@ namespace NoteApi.Data
         public Note GetPublicOrUserNoteById(int userId, int id)
         {
             var noteItem = _context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
-            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
+            if (noteItem != null)
+            {
+                noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
+            }
 
             return noteItem;
         }
