@@ -27,9 +27,15 @@ namespace NoteApi.Data
 
         public IEnumerable<Note> GetAllPublicOrUserNotes(int userId)
         {
+            // if public user then return all public notes
+            if (userId == 0)
+            {
+                return _context.Note.ToList().Where(note => note.TypeId == 2);
+            }
+
             return _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
         }
-        
+
         public Note GetUserNoteById(int userId, int id)
         {
             return _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();

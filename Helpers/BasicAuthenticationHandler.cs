@@ -28,21 +28,31 @@ namespace NoteApi.Helpers
             _repository = userRepository;
         }
 
-        protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
+        protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             // skip authentication if endpoint has [AllowAnonymous] attribute
             var endpoint = Context.GetEndpoint();
             if (endpoint?.Metadata?.GetMetadata<IAllowAnonymous>() != null)
             {
-                return AuthenticateResult.NoResult();
-            }
+                MainController.InnerUser = null;
 
-            if (!Request.Headers.ContainsKey("Authorization"))
-            {
-                return AuthenticateResult.Fail("Missing Authorization Header");
+                if (!Request.Headers.ContainsKey("Authorization"))
+                {
+                    MainController.InnerUser = new User() { Id = 0, Name = "PublicUser" };
+                    return Task.FromResult(AuthenticateResult.Fail("Missing Authorization Header"));
+                }
+                else
+                {
+                    return Task.FromResult(AuthenticateUser().Result);
+                }
             }
+            return Task.FromResult(AuthenticateUser().Result);
+        }
 
+        private async Task<AuthenticateResult> AuthenticateUser()
+        {
             User user = null;
+            MainController.InnerUser = null;
             try
             {
                 var authHeader = AuthenticationHeaderValue.Parse(Request.Headers["Authorization"]);

@@ -7,6 +7,7 @@ using NoteApi.Data.Tables;
 using NoteApi.Dtos;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace NoteApi.Controllers
 {
@@ -20,6 +21,9 @@ namespace NoteApi.Controllers
         private readonly IFolderRepository _folderRepository;
         private readonly IMapper _noteMapper;
 
+        private readonly string _wrongUserOrPassword = "Wrong username or password";
+        private readonly string _folderDoesNotExist = "Folder does not exist";
+
         public NotesController(INoteRepository noteRepository, IUserRepository userRepository, IFolderRepository folderRepository, IMapper noteMapper)
         {
             _noteRepository = noteRepository;
@@ -30,9 +34,14 @@ namespace NoteApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int userId)
+        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes()
         {
-            var noteList = _noteRepository.GetAllPublicOrUserNotes(userId);
+            if (InnerUser == null)
+            {
+                return Unauthorized(_wrongUserOrPassword);
+            }
+
+            var noteList = _noteRepository.GetAllPublicOrUserNotes(InnerUser.Id);
 
             if (noteList == null)
             {
@@ -44,9 +53,14 @@ namespace NoteApi.Controllers
 
         [AllowAnonymous]
         [HttpGet("{id}", Name = "GetNoteById")]
-        public ActionResult<NoteReadDto> GetNoteById(int userId, int id)
+        public ActionResult<NoteReadDto> GetNoteById(int id)
         {
-            Note noteItem = _noteRepository.GetPublicOrUserNoteById(userId, id);
+            if (InnerUser == null)
+            {
+                return Unauthorized(_wrongUserOrPassword);
+            }
+
+            Note noteItem = _noteRepository.GetPublicOrUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
             {
@@ -61,7 +75,13 @@ namespace NoteApi.Controllers
         {
             if (InnerUser == null)
             {
-                return Unauthorized();
+                return Unauthorized(_wrongUserOrPassword);
+            }
+
+            var folderItem = _folderRepository.GetFolderById(createDto.FolderId);
+            if(folderItem == null)
+            {
+                return BadRequest(_folderDoesNotExist);
             }
 
             Note noteItem = _noteMapper.Map<Note>(createDto);
@@ -78,13 +98,13 @@ namespace NoteApi.Controllers
         {
             if (InnerUser == null)
             {
-                return Unauthorized();
+                return Unauthorized(_wrongUserOrPassword);
             }
 
             var folderItem = _folderRepository.GetFolderById(updateDto.FolderId);
             if (folderItem == null)
             {
-                return FolderNotExistsReturnBadRequest();
+                return BadRequest(_folderDoesNotExist);
             }
 
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
@@ -107,7 +127,7 @@ namespace NoteApi.Controllers
         {
             if (InnerUser == null)
             {
-                return Unauthorized();
+                return Unauthorized(_wrongUserOrPassword);
             }
 
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
@@ -132,7 +152,7 @@ namespace NoteApi.Controllers
 
             if (folderItem == null)
             {
-                return FolderNotExistsReturnBadRequest();
+                return BadRequest(_folderDoesNotExist);
             }
 
             _noteRepository.UpdateNote(noteItem);
@@ -146,7 +166,7 @@ namespace NoteApi.Controllers
         {
             if (InnerUser == null)
             {
-                return Unauthorized();
+                return Unauthorized(_wrongUserOrPassword);
             }
 
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
@@ -160,11 +180,6 @@ namespace NoteApi.Controllers
             _noteRepository.SaveChanges();
 
             return NoContent();
-        }
-
-        private ActionResult FolderNotExistsReturnBadRequest()
-        {
-            return BadRequest("Folder does not exist");
         }
     }
 }
