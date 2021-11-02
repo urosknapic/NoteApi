@@ -46,6 +46,7 @@ namespace NoteApi
             services.AddScoped<IFolderRepository, MYSQLFolderRepository>();
             services.AddScoped<IContentNoteRepository, MYSQLContentNoteRepository>();
             services.AddScoped<IUserRepository, MYSQLUserRepository>();
+            services.AddScoped<ITypeRepository, MYSQLTypeRepository>();
 
             services.AddDbContextPool<NoteDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
             
