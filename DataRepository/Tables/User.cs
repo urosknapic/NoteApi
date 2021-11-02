@@ -16,5 +16,6 @@ namespace NoteApi.Data.Tables
         [MaxLength(30)]
         public string Password { get; set; }
         public IEnumerable<Folder> Folders { get; set; }
+        public IEnumerable<Note> Notes { get; set; }
     }
 }

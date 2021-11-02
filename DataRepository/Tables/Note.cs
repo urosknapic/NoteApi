@@ -23,6 +23,9 @@ namespace NoteApi.Data.Tables
 
         [ForeignKey("TypeId")]
         public int TypeId { get; set; }
+        
+        [ForeignKey("UserId")]
+        public int UserId { get; set; }
         public IEnumerable<ContentNote> Content { get; set; }
         public Type Type { get; set; }
     }

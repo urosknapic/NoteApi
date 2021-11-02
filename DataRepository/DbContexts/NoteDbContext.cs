@@ -101,7 +101,8 @@ namespace NoteApi.Data
                 Name = "FirstNote.txt",
                 Title = "Start of first note",
                 FolderId = 2,
-                TypeId = 1
+                TypeId = 1,
+                UserId = 1
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -109,7 +110,8 @@ namespace NoteApi.Data
                 Name = "Holidays.txt",
                 Title = "Christmas plans:",
                 FolderId = 2,
-                TypeId = 2
+                TypeId = 2,
+                UserId = 1
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -117,7 +119,8 @@ namespace NoteApi.Data
                 Name = "PetTodoList.txt",
                 Title = "What to do to get a new pet:",
                 FolderId = 2,
-                TypeId = 1
+                TypeId = 1,
+                UserId = 1
             });
             // miha notes
             modelBuilder.Entity<Note>().HasData(new Note()
@@ -126,7 +129,8 @@ namespace NoteApi.Data
                 Name = "Miha Europa CV",
                 Title = "Profesional painter",
                 FolderId = 4,
-                TypeId = 2
+                TypeId = 2,
+                UserId = 2
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -134,7 +138,8 @@ namespace NoteApi.Data
                 Name = "Home Renovation TODO:",
                 Title = "What to do to get a new pet:",
                 FolderId = 4,
-                TypeId = 1
+                TypeId = 1,
+                UserId = 2
             });
         }
     }
