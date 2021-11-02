@@ -47,14 +47,14 @@ namespace NoteApi.Controllers
 
         [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int page = 1, int limit = 10)
+        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int page = 1, int limit = 10, SortTypeEnum sort = 0, SortDirectionEnum direction = SortDirectionEnum.Ascending)
         {
             if (InnerUser == null)
             {
                 return Unauthorized(_wrongUserOrPassword);
             }
 
-            var noteList = _noteRepository.GetAllPublicOrUserNotes(InnerUser.Id, limit, page);
+            var noteList = _noteRepository.GetAllPublicOrUserNotes(InnerUser.Id, limit, page, sort, direction);
 
             if (noteList == null)
             {

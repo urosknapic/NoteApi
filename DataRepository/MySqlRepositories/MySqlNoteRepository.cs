@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NoteApi.Data.Tables;
+using NoteApi.Enums;
 
 namespace NoteApi.Data
 {
@@ -20,7 +21,7 @@ namespace NoteApi.Data
             _context.Note.Add(note);
         }
 
-        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, int notesPerPage, int page)
+        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, int notesPerPage, int page, SortTypeEnum sort, SortDirectionEnum direction)
         {
             var skipNotes = (page - 1) * notesPerPage;
             IEnumerable<Note> noteListTmp = null;
@@ -36,6 +37,9 @@ namespace NoteApi.Data
 
             // pagination
             noteListTmp.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+
+            noteListTmp = SortNotesCollection(noteListTmp, sort, direction);
+
             var noteList = noteListTmp
                 .Skip(skipNotes)
                 .Take(notesPerPage);
@@ -86,6 +90,29 @@ namespace NoteApi.Data
             {
                 throw new ArgumentNullException(nameof(note));
             }
+        }
+
+        private IEnumerable<Note> SortNotesCollection(IEnumerable<Note> collection, SortTypeEnum sortBy, SortDirectionEnum direction)
+        {
+            if (sortBy == SortTypeEnum.NoteShareType && direction == SortDirectionEnum.Ascending)
+            {
+                collection = collection.OrderBy(note => note.TypeId).ToList();
+            }
+            else if (sortBy == SortTypeEnum.NoteShareType && direction == SortDirectionEnum.Descending)
+            {
+                collection = collection.OrderByDescending(note => note.TypeId).ToList();
+            }
+
+            else if (sortBy == SortTypeEnum.NoteTitle && direction == SortDirectionEnum.Ascending)
+            {
+                collection = collection.OrderBy(note => note.Title).ToList();
+            }
+            else if (sortBy == SortTypeEnum.NoteTitle && direction == SortDirectionEnum.Descending)
+            {
+                collection = collection.OrderByDescending(note => note.Title).ToList();
+            }
+
+            return collection;
         }
     }
 }
