@@ -23,32 +23,32 @@ namespace NoteApi.Data
 
         public IEnumerable<Note> GetAllPublicOrUserNotes(int userId, string searchString, int notesPerPage, int page, SortTypeEnum sort, SortDirectionEnum direction)
         {
-            IEnumerable<Note> noteListTmp = null;
+            IEnumerable<Note> noteList = null;
 
             if (userId == 0)
             {
-                noteListTmp = _context.Note.ToList().Where(note => note.TypeId == 2); // select only public notes
+                noteList = _context.Note.ToList().Where(note => note.TypeId == 2); // select only public notes
             }
             else
             {
-                noteListTmp = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
+                noteList = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
             }
 
-            noteListTmp.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+            noteList.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
 
             if (!string.IsNullOrEmpty(searchString))
             {
-                noteListTmp = SearchBySearchText(noteListTmp, searchString);
+                noteList = SearchBySearchText(noteList, searchString);
             }
 
-            noteListTmp = SortNotesCollection(noteListTmp, sort, direction);
+            noteList = SortNotesCollection(noteList, sort, direction);
 
             if (page >= 1)
             {
-                noteListTmp = PaginationCollection(noteListTmp, page, notesPerPage);
+                noteList = PaginationCollection(noteList, page, notesPerPage);
             }
 
-            return noteListTmp;
+            return noteList;
         }
 
         public Note GetUserNoteById(int userId, int id)

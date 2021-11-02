@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using NoteApi.Data.Tables;
 
 namespace NoteApi.Dtos
 {
@@ -12,5 +13,6 @@ namespace NoteApi.Dtos
         public int TypeId { get; set; }
         public bool IsListNote { get; set; }
         public IEnumerable<ContentNoteReadDto> Content { get; set; }
+        public Type Type { get; set; }
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -18,10 +17,8 @@ namespace NoteApi.Controllers
     public class NotesController : MainController
     {
         private readonly INoteRepository _noteRepository;
-        private readonly IUserRepository _userRepository;
         private readonly IFolderRepository _folderRepository;
         private readonly ITypeRepository _typeRepository;
-        private readonly IContentNoteRepository _contentNoteRepository;
         private readonly IMapper _noteMapper;
 
         private readonly string _wrongUserOrPassword = "Wrong username or password";
@@ -33,15 +30,12 @@ namespace NoteApi.Controllers
             IUserRepository userRepository,
             IFolderRepository folderRepository,
             ITypeRepository typeRepository,
-            IContentNoteRepository contentNoteRepository,
             IMapper noteMapper
             )
         {
             _noteRepository = noteRepository;
-            _userRepository = userRepository;
             _folderRepository = folderRepository;
             _typeRepository = typeRepository;
-            _contentNoteRepository = contentNoteRepository;
             _noteMapper = noteMapper;
         }
 
