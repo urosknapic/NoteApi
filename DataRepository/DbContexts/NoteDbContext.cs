@@ -21,7 +21,6 @@ namespace NoteApi.Data
             SeedUsersFolders(modelBuilder);
             SeedTypeData(modelBuilder);
             SeedNoteData(modelBuilder);
-
         }
 
         private void SeedUserData(ModelBuilder modelBuilder)

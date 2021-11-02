@@ -6,6 +6,9 @@ namespace NoteApi.Dtos
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public string Name { get; set; }
+        public int FolderId { get; set; }
+        public int UserId { get; set; }
+        public int TypeId { get; set; }
     }
 }

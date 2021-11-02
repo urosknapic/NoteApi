@@ -11,18 +11,20 @@ using Microsoft.AspNetCore.Authorization;
 namespace NoteApi.Controllers
 {
     [Authorize]
-    [Route("api/users/{userId}/notes")]
+    [Route("api/users/notes")]
     [ApiController]
     public class NotesController : MainController
     {
         private readonly INoteRepository _noteRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IFolderRepository _folderRepository;
         private readonly IMapper _noteMapper;
 
-        public NotesController(INoteRepository noteRepository, IMapper noteMapper, IUserRepository userRepository)
+        public NotesController(INoteRepository noteRepository, IUserRepository userRepository, IFolderRepository folderRepository, IMapper noteMapper)
         {
             _noteRepository = noteRepository;
             _userRepository = userRepository;
+            _folderRepository = folderRepository;
             _noteMapper = noteMapper;
         }
 
@@ -57,14 +59,18 @@ namespace NoteApi.Controllers
         [HttpPost]
         public ActionResult<NoteReadDto> CreateNote(NoteCreateDto createDto)
         {
-            Note noteItem = _noteMapper.Map<Note>(createDto);
+            if (InnerUser == null)
+            {
+                return Unauthorized();
+            }
 
+            Note noteItem = _noteMapper.Map<Note>(createDto);
             _noteRepository.CreateNote(noteItem);
             _noteRepository.SaveChanges();
 
             var noteDto = _noteMapper.Map<NoteReadDto>(noteItem);
 
-            return CreatedAtRoute("GetNoteById", new { Id = noteDto.Id }, noteDto);
+            return CreatedAtRoute("GetNoteById", new { userId = InnerUser.Id, Id = noteDto.Id }, noteDto);
         }
 
         [HttpPut("{id}")]
@@ -74,6 +80,13 @@ namespace NoteApi.Controllers
             {
                 return Unauthorized();
             }
+            var folderItem = _folderRepository.GetFolderById(updateDto.FolderId);
+
+            if (folderItem == null)
+            {
+                return BadRequest("Folder does not exist");
+            }
+
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
