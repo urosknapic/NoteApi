@@ -101,7 +101,8 @@ namespace NoteApi.Data
                 Title = "Start of first note",
                 FolderId = 2,
                 TypeId = 1,
-                UserId = 1
+                UserId = 1,
+                IsListNote = false
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -110,7 +111,8 @@ namespace NoteApi.Data
                 Title = "Christmas plans:",
                 FolderId = 2,
                 TypeId = 2,
-                UserId = 1
+                UserId = 1,
+                IsListNote = true
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -119,7 +121,8 @@ namespace NoteApi.Data
                 Title = "What to do to get a new pet:",
                 FolderId = 2,
                 TypeId = 1,
-                UserId = 1
+                UserId = 1,
+                IsListNote = true
             });
             // miha notes
             modelBuilder.Entity<Note>().HasData(new Note()
@@ -129,7 +132,8 @@ namespace NoteApi.Data
                 Title = "Profesional painter",
                 FolderId = 4,
                 TypeId = 2,
-                UserId = 2
+                UserId = 2,
+                IsListNote = false
             });
             modelBuilder.Entity<Note>().HasData(new Note()
             {
@@ -138,7 +142,8 @@ namespace NoteApi.Data
                 Title = "What to do to get a new pet:",
                 FolderId = 4,
                 TypeId = 1,
-                UserId = 2
+                UserId = 2,
+                IsListNote = true
             });
         }
     }
