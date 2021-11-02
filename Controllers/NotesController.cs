@@ -30,9 +30,7 @@ namespace NoteApi.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int userId)
         {
-            var isAuth = User.Identity.IsAuthenticated;
-            
-            var noteList = _noteRepository.GetAllPublicNotes();
+            var noteList = _noteRepository.GetAllPublicOrUserNotes(userId);
 
             if (noteList == null)
             {
@@ -42,11 +40,11 @@ namespace NoteApi.Controllers
             return Ok(noteList);
         }
 
-        
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetNoteById")]
         public ActionResult<NoteReadDto> GetNoteById(int userId, int id)
         {
-            Note noteItem = _noteRepository.GetNoteById(id);
+            Note noteItem = _noteRepository.GetPublicOrUserNoteById(userId, id);
 
             if (noteItem == null)
             {

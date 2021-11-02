@@ -20,19 +20,24 @@ namespace NoteApi.Data
             _context.Note.Add(note);
         }
 
-        public IEnumerable<Note> GetAllNotes()
+        public IEnumerable<Note> GetAllNotes(int userId)
         {
             return _context.Note.ToList();
         }
 
-        public IEnumerable<Note> GetAllPublicNotes()
+        public IEnumerable<Note> GetAllPublicOrUserNotes(int userId)
         {
-            return _context.Note.ToList().Where(note => note.TypeId == 2);
+            return _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
         }
-
+        
         public Note GetNoteById(int id)
         {
             return _context.Note.Where(data => data.Id == id).FirstOrDefault();
+        }
+
+        public Note GetPublicOrUserNoteById(int userId, int id)
+        {
+            return _context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
         }
 
         public bool SaveChanges()
