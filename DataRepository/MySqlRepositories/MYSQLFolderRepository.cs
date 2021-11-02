@@ -35,6 +35,11 @@ namespace NoteApi.Data
             return _context.Folder.Where(data => data.Id == id).FirstOrDefault();
         }
 
+        public Folder GetUserFolderById(int userId, int id)
+        {
+            return _context.Folder.Where(data => data.Id == id && data.UserId == userId).FirstOrDefault();
+        }
+
         public bool SaveChanges()
         {
             return _context.SaveChanges() >= 0;

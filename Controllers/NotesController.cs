@@ -80,11 +80,11 @@ namespace NoteApi.Controllers
             {
                 return Unauthorized();
             }
-            var folderItem = _folderRepository.GetFolderById(updateDto.FolderId);
 
+            var folderItem = _folderRepository.GetFolderById(updateDto.FolderId);
             if (folderItem == null)
             {
-                return BadRequest("Folder does not exist");
+                return FolderNotExistsReturnBadRequest();
             }
 
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
@@ -118,6 +118,8 @@ namespace NoteApi.Controllers
             }
 
             var noteUpdaPatch = _noteMapper.Map<NoteUpdateDto>(noteItem);
+
+
             patchNote.ApplyTo(noteUpdaPatch, ModelState);
 
             if (!TryValidateModel(noteUpdaPatch))
@@ -126,6 +128,12 @@ namespace NoteApi.Controllers
             }
 
             _noteMapper.Map(noteUpdaPatch, noteItem);
+            var folderItem = _folderRepository.GetUserFolderById(InnerUser.Id, noteUpdaPatch.FolderId);
+
+            if (folderItem == null)
+            {
+                return FolderNotExistsReturnBadRequest();
+            }
 
             _noteRepository.UpdateNote(noteItem);
             _noteRepository.SaveChanges();
@@ -134,7 +142,7 @@ namespace NoteApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteNote(int userId, int id)
+        public ActionResult DeleteNote(int id)
         {
             if (InnerUser == null)
             {
@@ -152,6 +160,11 @@ namespace NoteApi.Controllers
             _noteRepository.SaveChanges();
 
             return NoContent();
+        }
+
+        private ActionResult FolderNotExistsReturnBadRequest()
+        {
+            return BadRequest("Folder does not exist");
         }
     }
 }
