@@ -79,9 +79,6 @@ namespace NoteApi.Controllers
             }
 
             var noteModel = _noteMapper.Map<NoteReadDto>(noteItem);
-            // var contentList = _noteMapper.Map<IEnumerable<ContentNoteReadDto>>(noteItem.Content);
-            // noteModel.Content = contentList;
-
             return Ok(noteModel);
         }
 

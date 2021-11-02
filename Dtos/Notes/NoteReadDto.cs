@@ -11,5 +11,6 @@ namespace NoteApi.Dtos
         public int UserId { get; set; }
         public int TypeId { get; set; }
         public bool IsListNote { get; set; }
+        public IEnumerable<ContentNoteReadDto> Content { get; set; }
     }
 }

@@ -13,7 +13,6 @@ namespace NoteApi.Profilers
             CreateMap<NoteCreateDto, Note>();
             CreateMap<NoteUpdateDto, Note>();
             CreateMap<Note, NoteUpdateDto>();
-            CreateMap<IEnumerable<ContentNote>, IEnumerable<ContentNoteReadDto>>();
         }
     }
 }

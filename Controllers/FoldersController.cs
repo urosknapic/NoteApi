@@ -47,7 +47,8 @@ namespace NoteApi.Controllers
                 return NoContent();
             }
 
-            return Ok(_mapper.Map<FolderReadDto>(folderItem));
+            var folderListModel =_mapper.Map<FolderReadDto>(folderItem);
+            return Ok(folderListModel);
         }
 
 
