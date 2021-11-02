@@ -25,6 +25,11 @@ namespace NoteApi.Data
             return _context.Note.ToList();
         }
 
+        public IEnumerable<Note> GetAllPublicNotes()
+        {
+            return _context.Note.ToList().Where(note => note.TypeId == 2);
+        }
+
         public Note GetNoteById(int id)
         {
             return _context.Note.Where(data => data.Id == id).FirstOrDefault();

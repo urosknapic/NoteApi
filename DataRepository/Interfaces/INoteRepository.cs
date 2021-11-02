@@ -6,9 +6,12 @@ namespace NoteApi.Data
     public interface INoteRepository : IBaseRepository
     {
         IEnumerable<Note> GetAllNotes();
+        IEnumerable<Note> GetAllPublicNotes();
         Note GetNoteById(int id);
         void CreateNote(Note note);
         void UpdateNote(Note note);
         void DeleteNote(Note note);
+
+
     }
 }

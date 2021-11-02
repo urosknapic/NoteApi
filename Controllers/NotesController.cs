@@ -11,35 +11,40 @@ using Microsoft.AspNetCore.Authorization;
 namespace NoteApi.Controllers
 {
     [Authorize]
-    [Route("api/notes")]
+    [Route("api/users/{userId}/notes")]
     [ApiController]
     public class NotesController : ControllerBase
     {
         private readonly INoteRepository _noteRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IMapper _noteMapper;
 
-        public NotesController(INoteRepository noteRepository, IMapper noteMapper)
+        public NotesController(INoteRepository noteRepository, IMapper noteMapper, IUserRepository userRepository)
         {
             _noteRepository = noteRepository;
+            _userRepository = userRepository;
             _noteMapper = noteMapper;
         }
 
+        [AllowAnonymous]
         [HttpGet]
-        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes()
+        public ActionResult<IEnumerable<NoteReadDto>> GetAllNotes(int userId)
         {
-            var noteList = _noteRepository.GetAllNotes();
+            var isAuth = User.Identity.IsAuthenticated;
+            
+            var noteList = _noteRepository.GetAllPublicNotes();
 
             if (noteList == null)
             {
                 return NoContent();
             }
 
-            return Ok(_noteMapper.Map<IEnumerable<NoteReadDto>>(noteList));
+            return Ok(noteList);
         }
 
-        // GET api/notes/{id}
+        
         [HttpGet("{id}", Name = "GetNoteById")]
-        public ActionResult<NoteReadDto> GetNoteById(int id)
+        public ActionResult<NoteReadDto> GetNoteById(int userId, int id)
         {
             Note noteItem = _noteRepository.GetNoteById(id);
 
