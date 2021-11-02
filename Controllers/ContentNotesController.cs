@@ -5,6 +5,7 @@ using NoteApi.Data;
 using NoteApi.Data.Tables;
 using NoteApi.Dtos;
 using Microsoft.AspNetCore.Authorization;
+using System.Linq;
 
 namespace NoteApi.Controllers
 {
@@ -51,6 +52,13 @@ namespace NoteApi.Controllers
             if (noteItem == null)
             {
                 return NotFound(_cannotFindNote);
+            }
+
+            List<ContentNote> contentList = _contentRepository.GetAllContentNotes(noteItem.Id).ToList();
+
+            if (contentList != null && contentList.Count() > 1 && !noteItem.IsListNote)
+            {
+                return BadRequest("Can't add more content to the note. It is Text only note");
             }
 
             ContentNote contentNote = _mapper.Map<ContentNote>(createDto);
