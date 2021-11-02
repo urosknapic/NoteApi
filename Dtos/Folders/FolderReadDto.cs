@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using NoteApi.Data.Tables;
 
 namespace NoteApi.Dtos
 {
@@ -8,6 +6,6 @@ namespace NoteApi.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public IEnumerable<Note> Notes { get; set; }
+        public IEnumerable<NoteReadDto> Notes { get; set; }
     }
 }

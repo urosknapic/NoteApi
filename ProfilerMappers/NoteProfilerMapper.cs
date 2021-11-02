@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using AutoMapper;
 using NoteApi.Data.Tables;
 using NoteApi.Dtos;
@@ -12,6 +13,7 @@ namespace NoteApi.Profilers
             CreateMap<NoteCreateDto, Note>();
             CreateMap<NoteUpdateDto, Note>();
             CreateMap<Note, NoteUpdateDto>();
+            CreateMap<IEnumerable<ContentNote>, IEnumerable<ContentNoteReadDto>>();
         }
     }
 }

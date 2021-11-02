@@ -20,6 +20,7 @@ namespace NoteApi.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IFolderRepository _folderRepository;
         private readonly ITypeRepository _typeRepository;
+        private readonly IContentNoteRepository _contentNoteRepository;
         private readonly IMapper _noteMapper;
 
         private readonly string _wrongUserOrPassword = "Wrong username or password";
@@ -31,6 +32,7 @@ namespace NoteApi.Controllers
             IUserRepository userRepository,
             IFolderRepository folderRepository,
             ITypeRepository typeRepository,
+            IContentNoteRepository contentNoteRepository,
             IMapper noteMapper
             )
         {
@@ -38,6 +40,7 @@ namespace NoteApi.Controllers
             _userRepository = userRepository;
             _folderRepository = folderRepository;
             _typeRepository = typeRepository;
+            _contentNoteRepository = contentNoteRepository;
             _noteMapper = noteMapper;
         }
 
@@ -75,7 +78,11 @@ namespace NoteApi.Controllers
                 return NoContent();
             }
 
-            return Ok(_noteMapper.Map<NoteReadDto>(noteItem));
+            var noteModel = _noteMapper.Map<NoteReadDto>(noteItem);
+            // var contentList = _noteMapper.Map<IEnumerable<ContentNoteReadDto>>(noteItem.Content);
+            // noteModel.Content = contentList;
+
+            return Ok(noteModel);
         }
 
         [HttpPost]

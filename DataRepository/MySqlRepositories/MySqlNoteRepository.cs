@@ -20,11 +20,6 @@ namespace NoteApi.Data
             _context.Note.Add(note);
         }
 
-        public IEnumerable<Note> GetAllNotes(int userId)
-        {
-            return _context.Note.ToList();
-        }
-
         public IEnumerable<Note> GetAllPublicOrUserNotes(int userId)
         {
             // if public user then return all public notes
@@ -38,12 +33,18 @@ namespace NoteApi.Data
 
         public Note GetUserNoteById(int userId, int id)
         {
-            return _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();
+            var noteItem = _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();
+            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId);
+            
+            return noteItem;
         }
 
         public Note GetPublicOrUserNoteById(int userId, int id)
         {
-            return _context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
+            var noteItem =_context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
+            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId);
+
+            return noteItem;
         }
 
         public bool SaveChanges()
