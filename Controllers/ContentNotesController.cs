@@ -13,7 +13,7 @@ namespace NoteApi.Controllers
     [Authorize]
     [Route("api/contentNotes")]
     [ApiController]
-    public class ContentNotesController : ControllerBase
+    public class ContentNotesController : MainController
     {
         private readonly IContentNoteRepository _repository;
         private readonly IMapper _mapper;

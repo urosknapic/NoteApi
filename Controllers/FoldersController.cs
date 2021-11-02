@@ -13,7 +13,7 @@ namespace NoteApi.Controllers
     [Authorize]
     [Route("api/folders")]
     [ApiController]
-    public class FoldersController : ControllerBase
+    public class FoldersController : MainController
     {
         private readonly IFolderRepository _repository;
         private readonly IMapper _mapper;

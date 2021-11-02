@@ -13,7 +13,7 @@ namespace NoteApi.Controllers
     [Authorize]
     [Route("api/users/{userId}/notes")]
     [ApiController]
-    public class NotesController : ControllerBase
+    public class NotesController : MainController
     {
         private readonly INoteRepository _noteRepository;
         private readonly IUserRepository _userRepository;
@@ -63,7 +63,7 @@ namespace NoteApi.Controllers
             _noteRepository.SaveChanges();
 
             var noteDto = _noteMapper.Map<NoteReadDto>(noteItem);
-
+            
             return CreatedAtRoute("GetNoteById", new { Id = noteDto.Id }, noteDto);
         }
 

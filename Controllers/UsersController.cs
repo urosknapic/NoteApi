@@ -11,7 +11,7 @@ namespace NoteApi.Controllers
     [Authorize]
     [ApiController]
     [Route("api/users")]
-    public class UsersController : ControllerBase
+    public class UsersController : MainController
     {
         private readonly IUserRepository _repository;
         private readonly IMapper _noteMapper;
