@@ -19,16 +19,25 @@ namespace NoteApi.Controllers
         private readonly INoteRepository _noteRepository;
         private readonly IUserRepository _userRepository;
         private readonly IFolderRepository _folderRepository;
+        private readonly ITypeRepository _typeRepository;
         private readonly IMapper _noteMapper;
 
         private readonly string _wrongUserOrPassword = "Wrong username or password";
         private readonly string _folderDoesNotExist = "Folder does not exist";
+        private readonly string _noteTypeNotExist = "Note type does not exist";
 
-        public NotesController(INoteRepository noteRepository, IUserRepository userRepository, IFolderRepository folderRepository, IMapper noteMapper)
+        public NotesController(
+            INoteRepository noteRepository,
+            IUserRepository userRepository,
+            IFolderRepository folderRepository,
+            ITypeRepository typeRepository,
+            IMapper noteMapper
+            )
         {
             _noteRepository = noteRepository;
             _userRepository = userRepository;
             _folderRepository = folderRepository;
+            _typeRepository = typeRepository;
             _noteMapper = noteMapper;
         }
 
@@ -79,11 +88,18 @@ namespace NoteApi.Controllers
             }
 
             var folderItem = _folderRepository.GetFolderById(createDto.FolderId);
-            if(folderItem == null)
+            if (folderItem == null)
             {
                 return BadRequest(_folderDoesNotExist);
             }
 
+            var typeItem = _typeRepository.GetTypeById(createDto.TypeId);
+            if (typeItem == null)
+            {
+                return BadRequest(_noteTypeNotExist);
+            }
+
+            createDto.UserId = InnerUser.Id;
             Note noteItem = _noteMapper.Map<Note>(createDto);
             _noteRepository.CreateNote(noteItem);
             _noteRepository.SaveChanges();
