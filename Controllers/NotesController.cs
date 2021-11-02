@@ -63,14 +63,18 @@ namespace NoteApi.Controllers
             _noteRepository.SaveChanges();
 
             var noteDto = _noteMapper.Map<NoteReadDto>(noteItem);
-            
+
             return CreatedAtRoute("GetNoteById", new { Id = noteDto.Id }, noteDto);
         }
 
         [HttpPut("{id}")]
         public ActionResult UpdateNote(int id, NoteUpdateDto updateDto)
         {
-            Note noteItem = _noteRepository.GetNoteById(id);
+            if (InnerUser == null)
+            {
+                return Unauthorized();
+            }
+            Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
             {
@@ -88,7 +92,12 @@ namespace NoteApi.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialNoteUpdate(int id, JsonPatchDocument<NoteUpdateDto> patchNote)
         {
-            Note noteItem = _noteRepository.GetNoteById(id);
+            if (InnerUser == null)
+            {
+                return Unauthorized();
+            }
+
+            Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
             {
@@ -112,9 +121,14 @@ namespace NoteApi.Controllers
         }
 
         [HttpDelete("{id}")]
-        public ActionResult DeleteNote(int id)
+        public ActionResult DeleteNote(int userId, int id)
         {
-            Note noteItem = _noteRepository.GetNoteById(id);
+            if (InnerUser == null)
+            {
+                return Unauthorized();
+            }
+
+            Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
             {

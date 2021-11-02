@@ -30,9 +30,9 @@ namespace NoteApi.Data
             return _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
         }
         
-        public Note GetNoteById(int id)
+        public Note GetUserNoteById(int userId, int id)
         {
-            return _context.Note.Where(data => data.Id == id).FirstOrDefault();
+            return _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();
         }
 
         public Note GetPublicOrUserNoteById(int userId, int id)
