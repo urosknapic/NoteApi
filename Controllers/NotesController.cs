@@ -123,6 +123,12 @@ namespace NoteApi.Controllers
                 return BadRequest(_folderDoesNotExist);
             }
 
+            var typeItem = _typeRepository.GetTypeById(updateDto.TypeId);
+            if (typeItem == null)
+            {
+                return BadRequest(_noteTypeNotExist);
+            }
+
             Note noteItem = _noteRepository.GetUserNoteById(InnerUser.Id, id);
 
             if (noteItem == null)
@@ -164,11 +170,17 @@ namespace NoteApi.Controllers
             }
 
             _noteMapper.Map(noteUpdaPatch, noteItem);
+            
             var folderItem = _folderRepository.GetUserFolderById(InnerUser.Id, noteUpdaPatch.FolderId);
-
             if (folderItem == null)
             {
                 return BadRequest(_folderDoesNotExist);
+            }
+            
+            var typeItem = _typeRepository.GetTypeById(noteUpdaPatch.TypeId);
+            if (typeItem == null)
+            {
+                return BadRequest(_noteTypeNotExist);
             }
 
             _noteRepository.UpdateNote(noteItem);
