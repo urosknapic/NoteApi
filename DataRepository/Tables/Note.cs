@@ -27,7 +27,6 @@ namespace NoteApi.Data.Tables
         public int UserId { get; set; }
         public IEnumerable<ContentNote> Content { get; set; }
         public Type Type { get; set; }
-
         public bool IsListNote { get; set; }
     }
 }

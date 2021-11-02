@@ -35,6 +35,7 @@ namespace NoteApi.Data
             }
 
             noteList.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+            noteList.ToList().ForEach(note => note.Type = _context.Type.Where(type => type.Id == note.TypeId).FirstOrDefault());
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -57,6 +58,7 @@ namespace NoteApi.Data
             if (noteItem != null)
             {
                 noteItem.Content = _context.ContentNote.Where(contextNote => contextNote.NoteId == noteItem.Id).ToList();
+                noteItem.Type = _context.Type.Where(type => type.Id == noteItem.TypeId).FirstOrDefault();
             }
 
             return noteItem;
@@ -68,6 +70,7 @@ namespace NoteApi.Data
             if (noteItem != null)
             {
                 noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
+                noteItem.Type = _context.Type.Where(type => type.Id == noteItem.TypeId).FirstOrDefault();
             }
 
             return noteItem;
@@ -121,8 +124,7 @@ namespace NoteApi.Data
 
         private IEnumerable<Note> SearchBySearchText(IEnumerable<Note> collection, string searchString)
         {
-            collection = collection.Where(note => note.Content.Where(content => content.Content.Contains(searchString)).Any());
-
+            collection = collection.Where(note => note.Type.Name.Contains(searchString) || note.Content.Where(content => content.Content.Contains(searchString)).Any());
             return collection;
         }
 
