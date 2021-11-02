@@ -68,7 +68,7 @@ namespace NoteApi.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateFolder(int id, FolderUpdateDto updateDto)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
@@ -85,7 +85,7 @@ namespace NoteApi.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialFolderUpdate(int id, JsonPatchDocument<FolderUpdateDto> patchNote)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
@@ -111,7 +111,7 @@ namespace NoteApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteFolder(int id)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
