@@ -25,24 +25,30 @@ namespace NoteApi.Data
             // if public user then return all public notes
             if (userId == 0)
             {
-                return _context.Note.ToList().Where(note => note.TypeId == 2);
+                var noteListPublic = _context.Note.ToList().Where(note => note.TypeId == 2);
+                noteListPublic.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+
+                return noteListPublic;
             }
 
-            return _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
+            var noteList = _context.Note.ToList().Where(note => note.UserId == userId || note.TypeId == 2);
+            noteList.ToList().ForEach(note => note.Content = _context.ContentNote.Where(contentNote => contentNote.NoteId == note.Id).ToList());
+
+            return noteList;
         }
 
         public Note GetUserNoteById(int userId, int id)
         {
             var noteItem = _context.Note.Where(data => data.UserId == userId && data.Id == id).FirstOrDefault();
-            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId);
-            
+            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
+
             return noteItem;
         }
 
         public Note GetPublicOrUserNoteById(int userId, int id)
         {
-            var noteItem =_context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
-            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId);
+            var noteItem = _context.Note.Where(data => (data.UserId == userId && data.Id == id && data.TypeId == 1) || (data.Id == id && data.TypeId == 2)).FirstOrDefault();
+            noteItem.Content = _context.ContentNote.Where(contextNote => noteItem.Id == contextNote.NoteId).ToList();
 
             return noteItem;
         }
