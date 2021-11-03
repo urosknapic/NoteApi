@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 
 namespace NoteApi.Dtos
 {
@@ -6,6 +6,6 @@ namespace NoteApi.Dtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public DateTime CreatedAt { get; set; }
+        public IEnumerable<NoteReadDto> Notes { get; set; }
     }
 }

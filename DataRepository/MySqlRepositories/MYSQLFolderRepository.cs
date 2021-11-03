@@ -25,14 +25,22 @@ namespace NoteApi.Data
             _context.Folder.Remove(folder);
         }
 
-        public IEnumerable<Folder> GetAllFolders()
+        public IEnumerable<Folder> GetAllFoldersByUserId(int userId)
         {
-            return _context.Folder.ToList();
+            var folderList = _context.Folder.Where(folder => folder.UserId == userId).ToList();
+            folderList.ForEach(folder => folder.Notes = _context.Note.Where(note => note.FolderId == folder.Id).ToList());
+
+            return folderList;
         }
 
-        public Folder GetFolderById(int id)
+        public Folder GetUserFolderById(int userId, int id)
         {
-            return _context.Folder.Where(data => data.Id == id).FirstOrDefault();
+            Folder folder = _context.Folder.Where(folder => folder.Id == id && folder.UserId == userId).FirstOrDefault();
+            if(folder != null)
+            {
+                folder.Notes = _context.Note.Where(note => note.FolderId == folder.Id && note.UserId == userId).ToList();
+            }
+            return folder;
         }
 
         public bool SaveChanges()

@@ -1,4 +1,0 @@
-namespace NoteApi.Controllers
-{
-
-}

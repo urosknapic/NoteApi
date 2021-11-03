@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace NoteApi.Dtos
 {
-    public class NoteCreateDto
+    public class NoteCreateDto : NoteUpdateDto
     {
         [Required]
-        public string Title { get; set; }
+        public int UserId { get; set; }
     }
 }

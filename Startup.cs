@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NoteApi.Data;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Authentication;
+using NoteApi.Helpers;
 
 namespace NoteApi
 {
@@ -34,10 +36,17 @@ namespace NoteApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddAuthentication("BasicAuthentication")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("BasicAuthentication", null);
+
+
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddScoped<INoteRepository, MYSQLNoteRepository>();
             services.AddScoped<IFolderRepository, MYSQLFolderRepository>();
+            services.AddScoped<IContentNoteRepository, MYSQLContentNoteRepository>();
+            services.AddScoped<IUserRepository, MYSQLUserRepository>();
+            services.AddScoped<ITypeRepository, MYSQLTypeRepository>();
 
             services.AddDbContextPool<NoteDbContext>(options => options.UseMySql(Configuration.GetConnectionString("NotesDatabase"), ServerVersion.AutoDetect(Configuration.GetConnectionString("NotesDatabase"))));
             
@@ -57,6 +66,7 @@ namespace NoteApi
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

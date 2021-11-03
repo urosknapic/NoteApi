@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using NoteApi.Data;
@@ -9,9 +10,10 @@ using NoteApi.Dtos;
 
 namespace NoteApi.Controllers
 {
-    [Route("api/folders")]
+    [Authorize]
+    [Route("api/users/folders")]
     [ApiController]
-    public class FoldersController : ControllerBase
+    public class FoldersController : MainController
     {
         private readonly IFolderRepository _repository;
         private readonly IMapper _mapper;
@@ -21,10 +23,11 @@ namespace NoteApi.Controllers
             _repository = noteRepository;
             _mapper = noteMapper;
         }
+
         [HttpGet]
         public ActionResult GetAllFolders()
         {
-            var foldersList = _repository.GetAllFolders();
+            var foldersList = _repository.GetAllFoldersByUserId(InnerUser.Id);
 
             if (foldersList == null)
             {
@@ -37,14 +40,15 @@ namespace NoteApi.Controllers
         [HttpGet("{id}", Name = "GetFolderById")]
         public ActionResult GetFolderById(int id)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
                 return NoContent();
             }
 
-            return Ok(_mapper.Map<FolderReadDto>(folderItem));
+            var folderListModel =_mapper.Map<FolderReadDto>(folderItem);
+            return Ok(folderListModel);
         }
 
 
@@ -52,7 +56,7 @@ namespace NoteApi.Controllers
         public ActionResult<FolderReadDto> CreateFolder(FolderCreateDto createDto)
         {
             Folder folderItem = _mapper.Map<Folder>(createDto);
-            folderItem.CreatedAt = DateTime.Now;
+            folderItem.UserId = InnerUser.Id;
 
             _repository.CreateFolder(folderItem);
             _repository.SaveChanges();
@@ -65,7 +69,7 @@ namespace NoteApi.Controllers
         [HttpPut("{id}")]
         public ActionResult UpdateFolder(int id, FolderUpdateDto updateDto)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
@@ -82,7 +86,7 @@ namespace NoteApi.Controllers
         [HttpPatch("{id}")]
         public ActionResult PartialFolderUpdate(int id, JsonPatchDocument<FolderUpdateDto> patchNote)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
@@ -108,7 +112,7 @@ namespace NoteApi.Controllers
         [HttpDelete("{id}")]
         public ActionResult DeleteFolder(int id)
         {
-            Folder folderItem = _repository.GetFolderById(id);
+            Folder folderItem = _repository.GetUserFolderById(InnerUser.Id, id);
 
             if (folderItem == null)
             {
