@@ -19,7 +19,7 @@
 
   - once you downloaded code from git into folder `noteapirepo` a folder NoteApi will be created with solution
   - open solution folder in VSC (File -> Open Folder -> and now select `c:\noteapirepo\NoteApi`)
-  - once this step is complete open terminal and run `dotnet run`; This will start project localy
+  - once this step is complete open terminal and run `dotnet run`; This will start application localy
   - please run command `dotnet ef database update`. This will create needed database inside MySql container.
 
 ## POSTMAN:
