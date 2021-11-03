@@ -11,8 +11,9 @@
   - download and install VSC from here: https://code.visualstudio.com/
   - download and install SDK .netcore 5.0 from here: https://dotnet.microsoft.com/download
     select latest SDK:  https://dotnet.microsoft.com/download/dotnet/thank-you/sdk-5.0.402-windows-x64-installer
-  - download ans install NETCORE 1.0 runtime https://dotnet.microsoft.com/download/dotnet/1.0/runtime?utm_source=getdotnetcore&utm_medium=referral
-      Application is using entity framework
+
+  If error (The framework 'Microsoft.NETCore.App', version '1.0.0' was not found.) occurs download NETCORE 1.0 runtime framework:
+  - https://dotnet.microsoft.com/download/dotnet/1.0/runtime?utm_source=getdotnetcore&utm_medium=referral
 
   - reopen VSC othervise terminal wont work with `dotnet` command
 
@@ -25,3 +26,15 @@
   - in \NoteApi folder you will find 'NotesApi.postman_collection' exported in 2.1 version; Import that file into Postman for API calls
   - import globals in postman as well
 
+
+## Users
+I have prepared 3 users:
+1. User: Janez Novak,
+    username: janezNovak,
+    password: 1234
+2. User: Miha Nagode,
+  username: mihaNagode,
+  password: 4321
+3. User: Anja Hudovernik,
+  username: anjaHudovernik
+  password: 9999
