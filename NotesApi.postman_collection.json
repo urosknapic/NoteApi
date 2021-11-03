@@ -1,0 +1,566 @@
+{
+	"info": {
+		"_postman_id": "6ac430cb-a1de-45c0-8991-6052b74210ce",
+		"name": "NotesApi",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Notes",
+			"item": [
+				{
+					"name": "Get all",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{g_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{g_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}"
+							],
+							"query": [
+								{
+									"key": "sort",
+									"value": "NoteTitle",
+									"disabled": true
+								},
+								{
+									"key": "direction",
+									"value": "Ascending",
+									"disabled": true
+								},
+								{
+									"key": "limit",
+									"value": "1",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/4",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{g_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{g_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Ok than ill give title\",\r\n    \"name\" : \"newpdf\",\r\n    \"Folderid\" : 4,\r\n    \"Typeid\" : 1,\r\n    \"isListNote\" : false\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update All by Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Ok than ill give title PUT method\",\r\n    \"name\" : \"newpdf PUT\",\r\n    \"Folderid\" : 4,\r\n    \"Typeid\" : 2,\r\n    \"isListNote\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/998123981238093",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"998123981238093"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Update By Id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\" : \"replace\",\r\n        \"path\" : \"/name\",\r\n        \"value\" : \"Miha Europa CV updated\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/4",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/4",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Folders",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{g_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{g_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get by Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}/4",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Home folder 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update All Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"I want nicer folder name\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}/4",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Update By Id",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[\r\n    {\r\n        \"op\" : \"replace\",\r\n        \"path\" : \"/name\",\r\n        \"value\" : \"this is from patch 33.0\"\r\n    }\r\n]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}/6123123132",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}",
+								"6123123132"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_foldersApi}}/7",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_foldersApi}}",
+								"7"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Content note",
+			"item": [
+				{
+					"name": "Get All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/4/content",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"4",
+								"content"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create",
+					"request": {
+						"auth": {
+							"type": "basic",
+							"basic": [
+								{
+									"key": "password",
+									"value": "{{g_password}}",
+									"type": "string"
+								},
+								{
+									"key": "username",
+									"value": "{{g_username}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Content\" : \"I want to describe how cool I am\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/10/content",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"10",
+								"content"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update All By Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\" : \"updated title for Id 2123123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/5/content/2",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"5",
+								"content",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete by id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{g_apiBaseUrl}}/{{c_notesApi}}/4/content/2",
+							"host": [
+								"{{g_apiBaseUrl}}"
+							],
+							"path": [
+								"{{c_notesApi}}",
+								"4",
+								"content",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "get all users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "{{g_password}}",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "{{g_username}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"janezNovak\",\r\n    \"password\" : \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{g_apiBaseUrl}}/api/users",
+					"host": [
+						"{{g_apiBaseUrl}}"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "{{g_password}}",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "{{g_username}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "c_foldersApi",
+			"value": "api/users/folders"
+		},
+		{
+			"key": "c_notesApi",
+			"value": "api/users/notes"
+		},
+		{
+			"key": "c_contentNotesApi",
+			"value": "api/users/notes/"
+		},
+		{
+			"key": "c_usersApi",
+			"value": "api/users"
+		}
+	]
+}
